@@ -19,24 +19,24 @@ public:
     int xB, yB;
     Vector3f color;
 
-    void flip_v(int &x, int &y, int h) {
+    static void flip_v(int &x, int &y, int h) {
         y = h - 1 - y;
     }
-    void flip_xy(int &x, int &y) {
+    static void flip_xy(int &x, int &y) {
         std::swap(x, y);
     }
-    void trans(int &x, int &y, int f, int w, int h)
+    static void trans(int &x, int &y, int f, int w, int h)
     {
         if (f & 1) flip_v(x, y, h);
         if ((f >> 1) & 1) flip_xy(x, y);
     }
-    void itrans(int &x, int &y, int f, int w, int h)
+    static void itrans(int &x, int &y, int f, int w, int h)
     {
         if ((f >> 1) & 1) flip_xy(x, y);
         if (f & 1) flip_v(x, y, h);
     }
 
-    void set_trans(int x, int y, int f, const Vector3f &color, Image &img)
+    static void set_trans(int x, int y, int f, const Vector3f &color, Image &img)
     {
         itrans(x, y, f, img.Width(), img.Height());
         // printf("@");
@@ -45,7 +45,7 @@ public:
 
     // draw a line from (x0, y0) to (x1, y1) on trans(img, f)
     // requirement: x0 <= x1, y0 <= y1, dy <= dx
-    void _draw(int x0, int y0, int x1, int y1, int f, const Vector3f &color, Image &img)
+    static void _draw(int x0, int y0, int x1, int y1, int f, const Vector3f &color, Image &img)
     {
         int x = x0, y = y0, dx = x1 - x0, dy = y1 - y0, e = -dx;
         // printf("@ x0 = %d, y0 = %d, x1 = %d, y1 = %d\n", x0, y0, x1, y1);
@@ -93,14 +93,14 @@ public:
     int radius;
     Vector3f color;
 
-    void set_sym(int x, int y, int x0, int y0, const Vector3f &color, Image &img)
+    static void set_sym(int x, int y, int x0, int y0, const Vector3f &color, Image &img)
     {
         int xs[] = {x, x, -x, -x, y, y, -y, -y};
         int ys[] = {y, -y, y, -y, x, -x, x, -x};
         for (int i = 0; i < 8; i++)
             img.SetPixel(x0 + xs[i], y0 + ys[i], color);
     }
-    void _draw(int x0, int y0, int r, const Vector3f &color, Image &img)
+    static void _draw(int x0, int y0, int r, const Vector3f &color, Image &img)
     {
         int x = 0, y = r;
         double d = 1.25 - r;
@@ -130,7 +130,7 @@ public:
     int cx, cy;
     Vector3f color;
 
-    void _draw(int x0, int y0, const Vector3f &color, Image &img) {
+    static void _draw(int x0, int y0, const Vector3f &color, Image &img) {
         static int dx[] = {1, -1, 0, 0};
         static int dy[] = {0, 0, 1, -1};
         Vector3f old_color = img.GetPixel(x0, y0);
