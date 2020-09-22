@@ -129,9 +129,34 @@ class Fill : public Element {
 public:
     int cx, cy;
     Vector3f color;
+
+    void _draw(int x0, int y0, const Vector3f &color, Image &img) {
+        static int dx[] = {1, -1, 0, 0};
+        static int dy[] = {0, 0, 1, -1};
+        Vector3f old_color = img.GetPixel(x0, y0);
+        if (old_color == color)
+            return ;
+        int w = img.Width(), h = img.Height();
+        std::queue<std::pair<int, int> > Q;
+        Q.push(std::make_pair(x0, y0));
+        while (!Q.empty()) {
+            int x = Q.front().first, y = Q.front().second;
+            Q.pop();
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i], ny = y + dy[i];
+                if (0 <= nx && nx < w && 0 <= ny && ny < h)
+                    if (img.GetPixel(x + dx[i], y + dy[i]) == old_color) {
+                        img.SetPixel(x + dx[i], y + dy[i], color);
+                        Q.push(std::make_pair(x + dx[i], y + dy[i]));
+                    }
+            }
+        }
+    }
+
     void draw(Image &img) override {
         // TODO: Flood fill
         printf("Flood fill source point = (%d, %d) using color (%f, %f, %f)\n", cx, cy,
                 color.x(), color.y(), color.z());
+        _draw(cx, cy, color, img);
     }
 };
