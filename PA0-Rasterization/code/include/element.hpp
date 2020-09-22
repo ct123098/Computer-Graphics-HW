@@ -93,10 +93,34 @@ public:
     int radius;
     Vector3f color;
 
+    void set_sym(int x, int y, int x0, int y0, const Vector3f &color, Image &img)
+    {
+        int xs[] = {x, x, -x, -x, y, y, -y, -y};
+        int ys[] = {y, -y, y, -y, x, -x, x, -x};
+        for (int i = 0; i < 8; i++)
+            img.SetPixel(x0 + xs[i], y0 + ys[i], color);
+    }
+    void _draw(int x0, int y0, int r, const Vector3f &color, Image &img)
+    {
+        int x = 0, y = r;
+        double d = 1.25 - r;
+        set_sym(x, y, x0, y0, color, img);
+        while (x <= y) {
+            if (d < 0)
+                d += 2 * x + 3;
+            else {
+                d += 2 * (x - y) + 5;
+                y--;
+            }
+            x++;
+            set_sym(x, y, x0, y0, color, img);
+        }
+    }
     void draw(Image &img) override {
         // TODO: Implement Algorithm to draw a Circle
         printf("Draw a circle with center (%d, %d) and radius %d using color (%f, %f, %f)\n", cx, cy, radius,
                color.x(), color.y(), color.z());
+        _draw(cx, cy, radius, color, img);
     }
 };
 
