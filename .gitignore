@@ -1,7 +1,12 @@
+*.pdf
+build/
+output/
+bin/
+
+test.txt
+
 # Prerequisites
 *.d
-
-*.pdf
 
 # Compiled Object files
 *.slo
