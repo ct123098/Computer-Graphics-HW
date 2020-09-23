@@ -139,6 +139,7 @@ public:
         int w = img.Width(), h = img.Height();
         std::queue<std::pair<int, int> > Q;
         Q.push(std::make_pair(x0, y0));
+        img.SetPixel(x0, y0, color);
         while (!Q.empty()) {
             int x = Q.front().first, y = Q.front().second;
             Q.pop();
