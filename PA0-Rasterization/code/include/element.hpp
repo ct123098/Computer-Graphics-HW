@@ -59,7 +59,7 @@ public:
     }
 
     void draw(Image &img) override {
-        // TODO: Implement Bresenham Algorithm
+        // Implement Bresenham Algorithm
         printf("Draw a line from (%d, %d) to (%d, %d) using color (%f, %f, %f)\n", xA, yA, xB, yB,
                 color.x(), color.y(), color.z());
         if (xA > xB) {
@@ -155,7 +155,7 @@ public:
     }
 
     void draw(Image &img) override {
-        // TODO: Flood fill
+        // Flood fill
         printf("Flood fill source point = (%d, %d) using color (%f, %f, %f)\n", cx, cy,
                 color.x(), color.y(), color.z());
         _draw(cx, cy, color, img);
