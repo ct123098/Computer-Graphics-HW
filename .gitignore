@@ -4,6 +4,7 @@ output/
 bin/
 submit/
 test.txt
+.vscode/
 
 # Prerequisites
 *.d
