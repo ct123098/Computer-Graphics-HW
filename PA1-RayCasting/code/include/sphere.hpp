@@ -34,7 +34,7 @@ public:
         double ll = l - sqrt(r * r - h2);
         if (ll < tmin)
             return false;
-        Vector3f point = a + ll * d, normal = point - o;
+        Vector3f point = a + ll * d, normal = (point - o).normalized();
         if (hit.getT() > ll) {
             hit.set(ll, material, normal);
         }
