@@ -27,10 +27,12 @@ public:
     }
 
     bool intersect(const Ray &r, Hit &h, float tmin) override {
+        bool ret;
         for (int i = 0; i < vec.size(); i++)
             if (vec[i] != nullptr) {
-                vec[i]->intersect(r, h, tmin);
+                ret |= vec[i]->intersect(r, h, tmin);
             }
+        return ret;
     }
 
     void addObject(int index, Object3D *obj) {
