@@ -13,7 +13,7 @@ public:
         // unit ball at the center
     }
 
-    Sphere(const Vector3f &center, float radius, Material *_material) : Object3D(material) {
+    Sphere(const Vector3f &center, float radius, Material *_material) : Object3D(_material) {
         o = center;
         r = radius;
     }
