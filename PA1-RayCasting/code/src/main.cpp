@@ -73,8 +73,11 @@ int main(int argc, char *argv[]) {
                 image->SetPixel(x, y, sceneParser->getBackgroundColor());
             }
         }
-    EXIT:;
+    // EXIT:;
     image->SaveImage(outputFile.c_str());
+    
+    delete sceneParser;
+    delete image;
     
     std::clock_t c_end = std::clock();
     cout << "Rendering finished. ";
