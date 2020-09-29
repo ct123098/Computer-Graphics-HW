@@ -16,7 +16,7 @@ public:
     }
 
     Plane(const Vector3f &normal, float d, Material *m) : Object3D(m) {
-        n = normal;
+        n = normal.normalized();
         o = d * n;
     }
 
@@ -25,17 +25,14 @@ public:
     bool intersect(const Ray &ray, Hit &hit, float tmin) override {
         const double EPS = 1e-8;
         Vector3f a = ray.getOrigin(), d = ray.getDirection();
-        if (abs(Vector3f::dot(d, n)) < EPS)
+        double C = Vector3f::dot(n, d);
+        if (abs(C) < EPS)
             return false;
-        Vector3f ao = o - a;
-        double h = Vector3f::dot(ao, n);
-        Vector3f nn = n * (h >= 0 ? 1 : -1);
-        h = abs(h);
-        double cost = Vector3f::dot(d, nn);
-        double l = h / cost;
+        double A = Vector3f::dot(n, o), B = Vector3f::dot(n, a);
+        double l = (A - B) / C;
         if (l < tmin)
             return false;
-        Vector3f point = a + l * d, normal = -nn;
+        Vector3f point = a + l * d, normal = -n * (C >= 0 ? 1 : -1);
         if (hit.getT() > l) {
             hit.set(l, material, normal);
         }
