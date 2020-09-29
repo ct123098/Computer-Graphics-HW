@@ -22,18 +22,23 @@ public:
         return diffuseColor;
     }
 
-    static double clip(double x, double mn = 0.0, double mx = 1.0) {
+    static double clip(double x, double mn = 0.0, double mx = 1e300) {
         return x > mx ? mx : x < mn ? mn : x;
     }
 
     Vector3f Shade(const Ray &ray, const Hit &hit,
                    const Vector3f &dirToLight, const Vector3f &lightColor) {
+        const double INF = 1e300;
         Vector3f shaded = Vector3f::ZERO;
         Vector3f N = hit.getNormal(), L = dirToLight, V = -ray.getDirection();
         Vector3f R = 2 * Vector3f::dot(N, L) * N - L;
-        // N.print(), L.print(), V.print(), R.print();
         shaded += lightColor * diffuseColor * clip(Vector3f::dot(N, L));
+        // if (Vector3f::dot(V, R) > 0.75 && shininess >= 127) {
+        //     std::cerr << "!" << ' ' << shininess << std::endl;
+        //     N.print(), L.print(), V.print(), R.print();
+        // }
         shaded += lightColor * specularColor * pow(clip(Vector3f::dot(V, R)), shininess);
+
         return shaded;
     }
 
