@@ -27,7 +27,7 @@ public:
     }
 
     bool intersect(const Ray &r, Hit &h, float tmin) override {
-        bool ret;
+        bool ret = false;
         for (int i = 0; i < vec.size(); i++)
             if (vec[i] != nullptr) {
                 ret |= vec[i]->intersect(r, h, tmin);
