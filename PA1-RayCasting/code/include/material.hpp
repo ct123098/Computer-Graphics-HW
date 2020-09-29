@@ -22,7 +22,7 @@ public:
         return diffuseColor;
     }
 
-    static double clip(double x, double mn = 0.0, double mx = 1e300) {
+    static double clip(double x, double mn = 0.0, double mx = 1.0) {
         return x > mx ? mx : x < mn ? mn : x;
     }
 
