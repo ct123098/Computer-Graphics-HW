@@ -32,6 +32,8 @@ public:
             return false;
         }
         double ll = l - sqrt(r * r - h2);
+        if (ll < tmin)
+            return false;
         Vector3f point = a + ll * d, normal = point - o;
         if (hit.getT() > ll) {
             hit.set(ll, material, normal);
