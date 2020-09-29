@@ -26,7 +26,7 @@ public:
         const double EPS = 1e-8;
         Vector3f a = ray.getOrigin(), d = ray.getDirection();
         double C = Vector3f::dot(n, d);
-        if (abs(C) < EPS)
+        if (fabs(C) < EPS)
             return false;
         double A = Vector3f::dot(n, o), B = Vector3f::dot(n, a);
         double l = (A - B) / C;

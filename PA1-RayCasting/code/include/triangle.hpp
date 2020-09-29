@@ -25,7 +25,7 @@ public:
         Vector3f a = ray.getOrigin(), d = ray.getDirection();
 		Vector3f n = Vector3f::cross(v1, v2).normalized();
         double C = Vector3f::dot(n, d);
-        if (abs(C) < EPS)
+        if (fabs(C) < EPS)
             return false;
         double A = Vector3f::dot(n, o), B = Vector3f::dot(n, a);
         double l = (A - B) / C;
