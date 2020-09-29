@@ -19,7 +19,7 @@ public:
     }
 
     explicit Group (int num_objects) {
-        vec.resize(num_obsjects);
+        vec.resize(num_objects);
     }
 
     ~Group() override {
@@ -34,7 +34,7 @@ public:
     }
 
     void addObject(int index, Object3D *obj) {
-        vec[index] = obs;
+        vec[index] = obj;
     }
 
     int getGroupSize() {
@@ -42,7 +42,7 @@ public:
     }
 
 private:
-    vector<Object3D*> vec;
+    std::vector<Object3D*> vec;
 };
 
 #endif
