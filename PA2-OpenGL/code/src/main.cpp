@@ -30,6 +30,7 @@ void screenCapture() {
     Image openglImg(imgW, imgH);
     auto *pixels = new unsigned char[3 * imgW * imgH];
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadBuffer(GL_BACK);
     // glReadBuffer(GL_FRONT);
     glReadPixels(0, 0, imgW, imgH, GL_RGB, GL_UNSIGNED_BYTE, pixels);
     // for (int i = 0; i < 3 * imgW * imgH; i++)
@@ -106,7 +107,6 @@ void drawScene() {
     baseGroup->drawGL();
 
     // Dump the image to the screen.
-    glutSwapBuffers();
 
     // int _tmp = 0;
     // for (int _ = 0; _ < 1e9; _++) _tmp += _ * _;
@@ -117,6 +117,8 @@ void drawScene() {
         screenCapture();
         exit(0);
     }
+    
+    glutSwapBuffers();
 }
 
 float getCenterDepth() {
