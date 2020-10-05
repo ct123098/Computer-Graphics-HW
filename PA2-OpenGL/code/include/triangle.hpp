@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// TODO (PA2): Copy from PA1
+// (PA2): Copy from PA1
 class Triangle: public Object3D
 {
 
@@ -17,7 +17,10 @@ public:
         ///@param a b c are three vertex positions of the triangle
 
 	Triangle( const Vector3f& a, const Vector3f& b, const Vector3f& c, Material* m) : Object3D(m) {
-	    
+	    vertices[0] = a;
+        vertices[1] = b;
+        vertices[2] = c;
+        normal = Vector3f::cross(b - a, c - a).normalized();
 	}
 
 	bool intersect( const Ray& ray,  Hit& hit , float tmin) override {

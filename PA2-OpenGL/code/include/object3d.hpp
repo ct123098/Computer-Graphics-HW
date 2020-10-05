@@ -4,7 +4,7 @@
 #include "ray.hpp"
 #include "hit.hpp"
 #include "material.hpp"
-#include<glut.h>
+#include <glut.h>
 
 // Base class for all 3d entities.
 class Object3D {

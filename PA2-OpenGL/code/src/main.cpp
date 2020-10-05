@@ -1,4 +1,4 @@
-#include <cassert>
+// #include <cassert>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -15,6 +15,8 @@
 #include <string>
 #include <glut.h>
 
+#include <cassert>
+
 using namespace std;
 
 // Global variables used by UI handlers.
@@ -28,8 +30,10 @@ void screenCapture() {
     Image openglImg(imgW, imgH);
     auto *pixels = new unsigned char[3 * imgW * imgH];
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
-    glReadBuffer(GL_FRONT);
+    // glReadBuffer(GL_FRONT);
     glReadPixels(0, 0, imgW, imgH, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    // for (int i = 0; i < 3 * imgW * imgH; i++)
+    //     assert(pixels[i] == 0);
     for (int x = 0; x < imgW; ++x) {
         for (int y = 0; y < imgH; ++y) {
             Vector3f color(
@@ -91,11 +95,22 @@ void drawScene() {
     // Setup MODELVIEW Matrix
     sceneParser->getCamera()->setupGLMatrix();
 
-    // TODO (PA2): Turn On all lights.
-    // TODO (PA2): Draw elements.
+    // (PA2): Turn On all lights.
+    for (int i = 0; i < sceneParser->getNumLights(); i++) {
+        Light *light = sceneParser->getLight(i);
+        light->turnOn(i);
+    }
+
+    // (PA2): Draw elements.
+    Group *baseGroup = sceneParser->getGroup();
+    baseGroup->drawGL();
 
     // Dump the image to the screen.
     glutSwapBuffers();
+
+    // int _tmp = 0;
+    // for (int _ = 0; _ < 1e9; _++) _tmp += _ * _;
+    // printf("%d\n", _tmp);
 
     // Save if not in interactive mode.
     if (!savePicturePath.empty()) {
@@ -135,10 +150,14 @@ int main(int argc, char *argv[]) {
 
     // Initialize GLUT
     glutInit(&argc, argv);
+
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowPosition(60, 60);
     glutInitWindowSize(cam->getWidth(), cam->getHeight());
     glutCreateWindow("PA2 OpenGL");
+
+    printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+    printf("GLU Version: %s\n", gluGetString(GLU_VERSION));
 
     // Depth testing must be turned on
     glEnable(GL_DEPTH_TEST);

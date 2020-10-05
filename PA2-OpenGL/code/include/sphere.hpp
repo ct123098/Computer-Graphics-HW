@@ -6,7 +6,7 @@
 #include <cmath>
 #include <glut.h>
 
-// TODO (PA2): Copy from PA1
+// (PA2): Copy from PA1
 
 class Sphere : public Object3D {
 public:
@@ -14,9 +14,11 @@ public:
         // unit ball at the center
     }
 
-    Sphere(const Vector3f &center, float radius, Material *material) : Object3D(material) {
-        //
+    Sphere(const Vector3f &_center, float _radius, Material *_material) : Object3D(_material) {
+        center = _center;
+        radius = _radius;
     }
+
 
     ~Sphere() override = default;
 

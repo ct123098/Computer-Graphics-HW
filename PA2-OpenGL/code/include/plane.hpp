@@ -5,7 +5,7 @@
 #include <vecmath.h>
 #include <cmath>
 
-// TODO (PA2): Copy from PA1
+// (PA2): Copy from PA1
 
 class Plane : public Object3D {
 public:
@@ -13,8 +13,9 @@ public:
 
     }
 
-    Plane(const Vector3f &normal, float d, Material *m) : Object3D(m) {
-
+    Plane(const Vector3f &normal, float _d, Material *m) : Object3D(m) {
+        norm = normal;
+        d = _d;
     }
 
     ~Plane() override = default;
